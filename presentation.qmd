@@ -1,0 +1,46 @@
+---
+title: "World Development Indicators Presentation"
+author: "Zihan Liang"
+format: revealjs
+---
+
+# Introduction
+
+This presentation highlights key findings from the World Development Indicators dataset for 2022.
+
+---
+
+# Key Insights
+```{python}
+# Load libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv('wdi.csv')
+
+# Display first few rows
+df.head()
+```
+
+## GDP per Capita Distribution
+```{python}
+plt.figure(figsize=(10, 6))
+sns.histplot(df['gdp_per_capita'].dropna(), bins=30, kde=True, color='skyblue')
+plt.title('GDP per Capita Distribution (2022)')
+plt.xlabel('GDP per Capita (USD)')
+plt.grid(True)
+plt.show()
+```
+
+## Life Expectancy vs GDP per Capita (2022)
+```{python}
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x='gdp_per_capita', y='life_expectancy')
+plt.title('Life Expectancy vs GDP per Capita (2022)')
+plt.xlabel('GDP per Capita (USD)')
+plt.ylabel('Life Expectancy (Years)')
+plt.grid(True)
+plt.show()
+```

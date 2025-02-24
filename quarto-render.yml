@@ -1,0 +1,39 @@
+name: Quarto Report Rendering
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Quarto
+        run: |
+          wget https://quarto.org/download/latest/quarto-linux-amd64.deb
+          sudo dpkg -i quarto-linux-amd64.deb
+
+      - name: Install Dependencies
+        run: |
+          pip install pandas panel matplotlib seaborn
+
+      - name: Render Quarto document
+        run: |
+          quarto render report.qmd
+
+      - name: Upload artifact (HTML output)
+        uses: actions/upload-artifact@v3
+        with:
+          name: report-html
+          path: report.html

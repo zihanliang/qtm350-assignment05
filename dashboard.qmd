@@ -1,0 +1,77 @@
+---
+title: "Interactive Dashboard"
+author: "Zihan Liang"
+date: 02/24/2025
+output:
+  html_document: default
+  pdf_document: default
+bibliography: references.bib
+format:
+  html:
+    code-fold: true
+---
+
+## Interactive Dashboard
+
+Use the interactive widgets below to explore the World Development Indicators dataset.
+
+```{python}
+import pandas as pd
+import panel as pn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Activate Panel's extension
+pn.extension()
+
+# Load dataset
+df = pd.read_csv('wdi.csv')
+
+# Create Panel widgets
+country_selector = pn.widgets.Select(
+    name='Country',
+    options=sorted(df['country'].dropna().unique())
+)
+
+indicator_selector = pn.widgets.Select(
+    name='Indicator',
+    options=[
+        'gdp_per_capita',
+        'life_expectancy',
+        'inflation_rate'
+    ]
+)
+
+# Approach A: Using @pn.depends with explicit arguments
+@pn.depends(country=country_selector.param.value, indicator=indicator_selector.param.value)
+def plot_indicator(country, indicator):
+    """
+    Creates a simple bar chart for the selected country and indicator.
+    """
+    country_data = df[df['country'] == country]
+    if country_data.empty:
+        return 'No data available for the selected country.'
+
+    # Grab the numeric value for the chosen indicator
+    value = country_data[indicator].values[0]
+
+    # Create the figure
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.bar([country], [value], color='skyblue')
+    ax.set_title(f'{indicator.replace("_", " ").title()} for {country}')
+    ax.set_ylabel(indicator.replace("_", " ").title())
+    plt.xticks(rotation=45)
+    plt.grid(True)
+
+    return fig
+
+# Combine widgets and plot into a single dashboard layout
+dashboard = pn.Column(
+    "### Select Country and Indicator",
+    pn.Row(country_selector, indicator_selector),
+    plot_indicator  # Just reference the function if using @pn.depends
+)
+
+# Make the dashboard servable (for use with 'quarto preview' or 'panel serve')
+dashboard.servable()
+```
