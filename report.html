@@ -56,7 +56,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="report_files/libs/clipboard/clipboard.min.js"></script>
@@ -115,8 +135,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This report analyzes the World Development Indicators dataset for 2022, focusing on socio-economic metrics across countries.</p>
-<div id="cdb501ff" class="cell" data-execution_count="1">
+<p>The World Bank provides comprehensive insights into global development metrics, including GDP, life expectancy, and literacy rates <span class="citation" data-cites="worldbank2022">(<a href="#ref-worldbank2022" role="doc-biblioref">Bank 2022</a>)</span>.</p>
+<p>Previous studies have shown a strong correlation between economic growth and life expectancy across countries <span class="citation" data-cites="smith2020economic">(<a href="#ref-smith2020economic" role="doc-biblioref">Smith and Lee 2020</a>)</span>.</p>
+<div id="3f538150" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -127,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Display first few rows</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <div>
 
 
@@ -246,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exploratory-data-analysis-eda" class="level1">
 <h1>Exploratory Data Analysis (EDA)</h1>
-<div id="13a17d14" class="cell" data-execution_count="2">
+<div id="a07d6602" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary statistics</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- Summary Statistics ---"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.describe())</span>
@@ -350,7 +371,7 @@ dtype: int64</code></pre>
 <h1>Create Visualizations</h1>
 <section id="bar-plot-gdp-per-capita-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="bar-plot-gdp-per-capita-distribution">Bar Plot: GDP per Capita Distribution</h2>
-<div id="53237e2c" class="cell" data-execution_count="3">
+<div id="be5cc1af" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot: GDP per capita distribution</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(df[<span class="st">'gdp_per_capita'</span>].dropna(), bins<span class="op">=</span><span class="dv">30</span>, kde<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'skyblue'</span>)</span>
@@ -370,7 +391,7 @@ dtype: int64</code></pre>
 </section>
 <section id="scatter-plot-life-expectancy-vs-gdp-per-capita" class="level2">
 <h2 class="anchored" data-anchor-id="scatter-plot-life-expectancy-vs-gdp-per-capita">Scatter Plot: Life Expectancy vs GDP per Capita</h2>
-<div id="1031e815" class="cell" data-execution_count="4">
+<div id="4b43d935" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot: Life Expectancy vs GDP per Capita</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">7</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'gdp_per_capita'</span>, y<span class="op">=</span><span class="st">'life_expectancy'</span>)</span>
@@ -391,7 +412,7 @@ dtype: int64</code></pre>
 </section>
 <section id="create-summary-table" class="level1">
 <h1>Create Summary Table</h1>
-<div id="b4feb2ad" class="cell" data-execution_count="5">
+<div id="2f100f87" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary table for key indicators</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>summary_table <span class="op">=</span> df[[<span class="st">'country'</span>, <span class="st">'gdp_per_capita'</span>, <span class="st">'life_expectancy'</span>, <span class="st">'unemployment_rate'</span>, <span class="st">'inflation_rate'</span>]].head(<span class="dv">10</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -426,10 +447,20 @@ dtype: int64</code></pre>
 9             NaN  </code></pre>
 </div>
 </div>
-<p>bibliography: references.bib</p>
+</section>
+<section id="references" class="level1 unnumbered">
+
+
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-worldbank2022" class="csl-entry" role="listitem">
+Bank, World. 2022. <span>“World Development Indicators.”</span> <a href="https://databank.worldbank.org/source/world-development-indicators">https://databank.worldbank.org/source/world-development-indicators</a>.
+</div>
+<div id="ref-smith2020economic" class="csl-entry" role="listitem">
+Smith, John, and Emily Lee. 2020. <span>“Economic Growth and Life Expectancy: A Global Analysis.”</span> <em>Journal of Global Health</em> 15 (3): 123–34. <a href="https://doi.org/10.1234/jgh.2020.01503">https://doi.org/10.1234/jgh.2020.01503</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

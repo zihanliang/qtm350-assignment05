@@ -2,10 +2,10 @@
 title: "World Development Indicators Analysis"
 author: "Zihan Liang"
 date: 02/24/2025
+bibliography: references.bib
 output:
   html_document: default
   pdf_document: default
-  bibliography: references.bib
 ---
 
 # Introduction
