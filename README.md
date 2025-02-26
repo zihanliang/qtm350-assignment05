@@ -2,8 +2,8 @@
 
 ## 📊 HTML Reports
 
-- [World Development Indicators Report](https://yourusername.github.io/QTM350-ASSIGNMENT05/report.html)
-- [Presentation of Key Findings](https://yourusername.github.io/QTM350-ASSIGNMENT05/presentation.html)
+- [World Development Indicators Report](https://zihanliang.github.io/QTM350-ASSIGNMENT05/report.html)
+- [Presentation of Key Findings](https://zihanliang.github.io/QTM350-ASSIGNMENT05/presentation.html)
 
 ## 📄 Project Structure
 - `report.qmd`: Quarto source file for the report.
